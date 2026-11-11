@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="uz">
 
@@ -34,19 +35,19 @@
       margin: 0 auto 34px;
     }
 
-    .section-grid {
+    .section-grid,
+    .photos {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
       gap: 24px;
     }
 
     .photos {
-      display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
       gap: 26px;
     }
 
-    .media-card {
+    .media-item {
       position: relative;
       overflow: hidden;
       padding: 10px;
@@ -60,24 +61,25 @@
       transition: transform .22s ease, border-color .22s ease;
     }
 
-    .media-card:hover {
+    .media-item:hover {
       transform: translateY(-4px);
       border-color: rgba(255, 255, 255, .3);
     }
 
-    .media-card video,
-    .media-card img {
+    .media-item video,
+    .media-item img {
       display: block;
       width: 100%;
       height: auto;
-      aspect-ratio: 16/9;
+      aspect-ratio: 16 / 9;
       object-fit: cover;
       border-radius: 17px;
       background: #080b0e;
+      pointer-events: none;
     }
 
-    .media-card img {
-      aspect-ratio: 4/3;
+    .media-item[data-type="image"] img {
+      aspect-ratio: 4 / 3;
       object-fit: contain;
       background: rgba(0, 0, 0, .18);
     }
@@ -103,7 +105,7 @@
       align-items: center;
       justify-content: center;
       padding: 22px;
-      background: rgba(0, 0, 0, .88);
+      background: rgba(0, 0, 0, .92);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
     }
@@ -130,6 +132,10 @@
       border-radius: 16px;
       object-fit: contain;
       box-shadow: 0 24px 80px rgba(0, 0, 0, .55);
+    }
+
+    .viewer video {
+      max-width: min(100%, 1100px);
     }
 
     .viewer-nav {
@@ -188,13 +194,13 @@
         gap: 16px;
       }
 
-      .media-card {
+      .media-item {
         border-radius: 20px;
         padding: 8px;
       }
 
-      .media-card video,
-      .media-card img {
+      .media-item video,
+      .media-item img {
         border-radius: 14px;
       }
 
@@ -216,12 +222,21 @@
 <body>
 
   <main>
+<section class="section">
+      <div class="section-grid">
+ <div class="media-item" data-type="video" data-src="assets/7.mp4"></div>
 
+        <div class="media-item" data-type="video" data-src="assets/8.mp4"></div>
+
+        <div class="media-item" data-type="video" data-src="assets/9.mp4"></div>
+   </div>
+    </section>
+     <div class="split"></div>
     <!-- 1-VIDEO BO'LIMI -->
     <section class="section">
-      <div class="section-grid" id="videos-1">
+      <div class="section-grid">
 
-        <!-- VIDEO QO'SHISH: BLOKNI DUPLICATE QIL -->
+        <!-- VIDEO QO'SHISH: SHU BLOKNI DUPLICATE QILING -->
         <div class="media-item" data-type="video" data-src="assets/1.mp4"></div>
 
         <div class="media-item" data-type="video" data-src="assets/2.mp4"></div>
@@ -234,17 +249,16 @@
 
         <div class="media-item" data-type="video" data-src="assets/6.mp4"></div>
 
-        <div class="media-item" data-type="video" data-src="assets/7.mp4"></div>
-
-        <div class="media-item" data-type="video" data-src="assets/8.mp4"></div>
-
-        <div class="media-item" data-type="video" data-src="assets/9.mp4"></div>
-
       </div>
     </section>
+
     <div class="split"></div>
+
+    <!-- 1-RASMLAR BO'LIMI -->
     <section class="section">
-      <div class="photos" id="photos">
+      <div class="photos">
+
+        <!-- RASM QO'SHISH: SHU BLOKNI DUPLICATE QILING -->
         <div class="media-item" data-type="image" data-src="assets/5.png"></div>
 
         <div class="media-item" data-type="image" data-src="assets/optik.png"></div>
@@ -257,13 +271,14 @@
 
       </div>
     </section>
+
     <div class="split"></div>
 
     <!-- 2-VIDEO BO'LIMI -->
     <section class="section">
-      <div class="section-grid" id="videos-2">
+      <div class="section-grid">
 
-        <!-- VIDEO QO'SHISH: BLOKNI DUPLICATE QIL -->
+        <!-- VIDEO QO'SHISH -->
         <div class="media-item" data-type="video" data-src="assets/10.mp4"></div>
 
         <div class="media-item" data-type="video" data-src="assets/11.mp4"></div>
@@ -279,11 +294,11 @@
 
     <div class="split"></div>
 
-    <!-- 3-RASMLAR BO'LIMI -->
+    <!-- 2-RASMLAR BO'LIMI -->
     <section class="section">
-      <div class="photos" id="photos">
+      <div class="photos">
 
-        <!-- RASM QO'SHISH: BLOKNI DUPLICATE QIL -->
+        <!-- RASM QO'SHISH -->
         <div class="media-item" data-type="image" data-src="assets/1.jpg"></div>
 
         <div class="media-item" data-type="image" data-src="assets/2.jpg"></div>
@@ -291,14 +306,17 @@
         <div class="media-item" data-type="image" data-src="assets/3.jpg"></div>
 
         <div class="media-item" data-type="image" data-src="assets/4.jpg"></div>
+
       </div>
     </section>
+
     <div class="split"></div>
 
+    <!-- 3-RASMLAR BO'LIMI -->
     <section class="section">
-      <div class="photos" id="photos">
+      <div class="photos">
 
-        <!-- RASM QO'SHISH: BLOKNI DUPLICATE QIL -->
+        <!-- RASM QO'SHISH -->
         <div class="media-item" data-type="image" data-src="assets/ornat1.jpg"></div>
 
         <div class="media-item" data-type="image" data-src="assets/ornat2.jpg"></div>
@@ -306,18 +324,30 @@
         <div class="media-item" data-type="image" data-src="assets/ornat3.jpg"></div>
 
         <div class="media-item" data-type="image" data-src="assets/ornat4.jpg"></div>
+
+        <div class="media-item" data-type="image" data-src="assets/ornat5.jpg"></div>
+
+        <div class="media-item" data-type="image" data-src="assets/ornat6.jpg"></div>
+
+        <div class="media-item" data-type="image" data-src="assets/ornat7.jpg"></div>
+
       </div>
     </section>
-    <div class="split"></div>
+
   </main>
 
   <!-- REELS OYNASI -->
 
   <div class="viewer" id="viewer" aria-modal="true" role="dialog">
-    <button class="close" id="closeViewer">×</button>
-    <button class="viewer-nav prev" id="prevMedia">‹</button>
+
+    <button class="close" id="closeViewer" aria-label="Yopish">×</button>
+
+    <button class="viewer-nav prev" id="prevMedia" aria-label="Oldingi">‹</button>
+
     <div class="viewer-content" id="viewerContent"></div>
-    <button class="viewer-nav next" id="nextMedia">›</button>
+
+    <button class="viewer-nav next" id="nextMedia" aria-label="Keyingi">›</button>
+
   </div>
 
   <script>
@@ -330,22 +360,23 @@
     const prevButton = document.getElementById('prevMedia');
     const nextButton = document.getElementById('nextMedia');
 
-    /* HTML BLOKLARIDAN MEDIA KARTALARINI YASASH */
+    /* MEDIA KARTALARINI YARATISH */
 
     function initializeMedia() {
+
       document.querySelectorAll('.media-item').forEach(item => {
+
         const type = item.dataset.type;
         const src = item.dataset.src;
 
         if (!src || !type) return;
 
-        const card = document.createElement('div');
-        card.className = 'media-card';
-
         let preview;
 
         if (type === 'video') {
+
           preview = document.createElement('video');
+
           preview.src = src;
           preview.autoplay = true;
           preview.muted = true;
@@ -353,47 +384,65 @@
           preview.playsInline = true;
           preview.preload = 'metadata';
           preview.controls = false;
-          preview.play().catch(() => { });
+
+          preview.play().catch(() => {});
+
         } else if (type === 'image') {
+
           preview = document.createElement('img');
+
           preview.src = src;
           preview.alt = '';
           preview.loading = 'lazy';
+
         } else {
           return;
         }
 
         preview.addEventListener('error', () => {
           console.error('Media yuklanmadi:', src);
-          card.style.display = 'none';
+          item.style.display = 'none';
         });
 
-        card.appendChild(preview);
+        item.appendChild(preview);
 
-        card.addEventListener('click', () => {
-          const container = item.parentElement;
-          const group = Array.from(container.querySelectorAll('.media-item'))
-            .filter(element => element.dataset.src && element.dataset.type);
+        /* MUHIM: ITEM ALMASHTIRILMAYDI */
 
-          openMedia(group, group.indexOf(item));
+        item.addEventListener('click', () => {
+
+          const group = Array.from(
+            item.parentElement.querySelectorAll('.media-item')
+          ).filter(element => element.dataset.src && element.dataset.type);
+
+          const index = group.indexOf(item);
+
+          openMedia(group, index);
+
         });
 
-        item.replaceWith(card);
       });
+
     }
 
     /* MEDIA OCHISH */
 
     function openMedia(group, index) {
+
       activeGroup = group;
       activeIndex = index;
+
       renderMedia();
+
       viewer.classList.add('open');
+
+      document.body.style.overflow = 'hidden';
+
     }
 
     /* MEDIA KO'RSATISH */
 
     function renderMedia() {
+
       const oldVideo = viewerContent.querySelector('video');
 
       if (oldVideo) {
@@ -405,13 +454,16 @@
       viewerContent.replaceChildren();
 
       const item = activeGroup[activeIndex];
+
       if (!item) return;
 
       const src = item.dataset.src;
       const type = item.dataset.type;
 
       if (type === 'video') {
+
         const video = document.createElement('video');
+
         video.src = src;
         video.controls = true;
         video.autoplay = true;
@@ -420,32 +472,46 @@
         video.muted = false;
 
         viewerContent.appendChild(video);
-        video.play().catch(() => { });
-      } else {
+
+        /* Bosish orqali ochilgani uchun ovoz bilan ijro etishga urinish */
+        video.play().catch(error => {
+          console.log('Ijro etish uchun play tugmasini bosing:', error);
+        });
+
+      } else if (type === 'image') {
+
         const img = document.createElement('img');
+
         img.src = src;
         img.alt = '';
+
         viewerContent.appendChild(img);
+
       }
 
       prevButton.disabled = activeIndex === 0;
       nextButton.disabled = activeIndex === activeGroup.length - 1;
+
     }
 
     /* OLDINGI / KEYINGI MEDIA */
 
     function moveMedia(direction) {
+
       const nextIndex = activeIndex + direction;
 
       if (nextIndex < 0 || nextIndex >= activeGroup.length) return;
 
       activeIndex = nextIndex;
+
       renderMedia();
+
     }
 
     /* OYNANI YOPISH */
 
     function closeViewer() {
+
       const video = viewerContent.querySelector('video');
 
       if (video) {
@@ -455,9 +521,14 @@
       }
 
       viewer.classList.remove('open');
+
       viewerContent.replaceChildren();
+
       activeGroup = [];
       activeIndex = 0;
+
+      document.body.style.overflow = '';
+
     }
 
     /* TUGMALAR */
@@ -465,41 +536,56 @@
     document.getElementById('closeViewer').addEventListener('click', closeViewer);
 
     prevButton.addEventListener('click', () => moveMedia(-1));
+
     nextButton.addEventListener('click', () => moveMedia(1));
 
     /* TELEFONDA SURISH */
 
     viewer.addEventListener('touchstart', event => {
+
       touchStartX = event.changedTouches[0].screenX;
+
     }, { passive: true });
 
     viewer.addEventListener('touchend', event => {
+
       const deltaX = event.changedTouches[0].screenX - touchStartX;
 
       if (Math.abs(deltaX) > 55) {
         moveMedia(deltaX < 0 ? 1 : -1);
       }
+
     }, { passive: true });
+
+    /* ORQA FONNI BOSISH */
+
+    viewer.addEventListener('click', event => {
+
+      if (event.target === viewer) {
+        closeViewer();
+      }
+
+    });
 
     /* KLAVIATURA */
 
-    viewer.addEventListener('click', event => {
-      if (event.target === viewer) closeViewer();
-    });
-
     document.addEventListener('keydown', event => {
+
       if (!viewer.classList.contains('open')) return;
 
       if (event.key === 'Escape') closeViewer();
+
       if (event.key === 'ArrowLeft') moveMedia(-1);
+
       if (event.key === 'ArrowRight') moveMedia(1);
+
     });
 
     /* ISHGA TUSHIRISH */
 
     initializeMedia();
+
   </script>
 
 </body>
-
 </html>
