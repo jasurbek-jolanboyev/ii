@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#101419">
   <title>Media Gallery</title>
+
   <style>
     * {
       box-sizing: border-box;
@@ -13,7 +14,6 @@
 
     :root {
       color-scheme: dark;
-      --glass: rgba(255, 255, 255, .075);
       --line: rgba(255, 255, 255, .16);
     }
 
@@ -29,14 +29,6 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    .gallery {
-      width: min(1600px, 100%);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-      gap: 24px;
-    }
-
     .section {
       width: min(1600px, 100%);
       margin: 0 auto 34px;
@@ -46,6 +38,12 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
       gap: 24px;
+    }
+
+    .photos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+      gap: 26px;
     }
 
     .media-card {
@@ -59,13 +57,12 @@
       backdrop-filter: blur(22px);
       -webkit-backdrop-filter: blur(22px);
       cursor: pointer;
-      transition: transform .22s ease, border-color .22s ease, background .22s ease;
+      transition: transform .22s ease, border-color .22s ease;
     }
 
     .media-card:hover {
       transform: translateY(-4px);
       border-color: rgba(255, 255, 255, .3);
-      background: linear-gradient(145deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .055));
     }
 
     .media-card video,
@@ -73,16 +70,20 @@
       display: block;
       width: 100%;
       height: auto;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 16/9;
       object-fit: cover;
       border-radius: 17px;
       background: #080b0e;
     }
 
     .media-card img {
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 4/3;
       object-fit: contain;
       background: rgba(0, 0, 0, .18);
+    }
+
+    .photo-card {
+      padding: 12px;
     }
 
     .split {
@@ -92,20 +93,7 @@
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .25), transparent);
     }
 
-    .photos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
-      gap: 26px;
-    }
-
-    .photo-card {
-      padding: 12px;
-    }
-
-    .photo-card img {
-      aspect-ratio: 4 / 3;
-      object-fit: contain;
-    }
+    /* REELS VIEWER */
 
     .viewer {
       position: fixed;
@@ -125,7 +113,6 @@
     }
 
     .viewer-content {
-      position: relative;
       width: min(1500px, 96vw);
       max-height: 92vh;
       display: flex;
@@ -158,7 +145,6 @@
       font-size: 30px;
       cursor: pointer;
       backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
       z-index: 22;
     }
 
@@ -186,12 +172,12 @@
       color: white;
       background: rgba(255, 255, 255, .12);
       font-size: 27px;
-      line-height: 1;
       cursor: pointer;
       backdrop-filter: blur(14px);
+      z-index: 23;
     }
 
-    @media (max-width: 600px) {
+    @media(max-width:600px) {
       body {
         padding: 14px;
       }
@@ -215,90 +201,188 @@
       .split {
         margin: 28px auto;
       }
+
+      .viewer-nav.prev {
+        left: 8px;
+      }
+
+      .viewer-nav.next {
+        right: 8px;
+      }
     }
   </style>
 </head>
 
 <body>
+
   <main>
+
+    <!-- 1-VIDEO BO'LIMI -->
     <section class="section">
-      <div class="section-grid" id="videos-1"></div>
+      <div class="section-grid" id="videos-1">
+
+        <!-- VIDEO QO'SHISH: BLOKNI DUPLICATE QIL -->
+        <div class="media-item" data-type="video" data-src="assets/1.mp4"></div>
+
+        <div class="media-item" data-type="video" data-src="assets/2.mp4"></div>
+
+        <div class="media-item" data-type="video" data-src="assets/3.mp4"></div>
+
+        <div class="media-item" data-type="video" data-src="assets/4.mp4"></div>
+
+        <div class="media-item" data-type="video" data-src="assets/5.mp4"></div>
+
+        <div class="media-item" data-type="video" data-src="assets/6.mp4"></div>
+
+        <div class="media-item" data-type="video" data-src="assets/7.mp4"></div>
+
+        <div class="media-item" data-type="video" data-src="assets/8.mp4"></div>
+
+        <div class="media-item" data-type="video" data-src="assets/9.mp4"></div>
+
+      </div>
+    </section>
+    <div class="split"></div>
+    <section class="section">
+      <div class="photos" id="photos">
+        <div class="media-item" data-type="image" data-src="assets/5.png"></div>
+
+        <div class="media-item" data-type="image" data-src="assets/optik.png"></div>
+
+        <div class="media-item" data-type="image" data-src="assets/optiklar.png"></div>
+
+        <div class="media-item" data-type="image" data-src="assets/mudofa.png"></div>
+
+        <div class="media-item" data-type="image" data-src="assets/mudofa1.png"></div>
+
+      </div>
+    </section>
+    <div class="split"></div>
+
+    <!-- 2-VIDEO BO'LIMI -->
+    <section class="section">
+      <div class="section-grid" id="videos-2">
+
+        <!-- VIDEO QO'SHISH: BLOKNI DUPLICATE QIL -->
+        <div class="media-item" data-type="video" data-src="assets/10.mp4"></div>
+
+        <div class="media-item" data-type="video" data-src="assets/11.mp4"></div>
+
+        <div class="media-item" data-type="video" data-src="assets/12.mp4"></div>
+
+        <div class="media-item" data-type="video" data-src="assets/13.mp4"></div>
+
+        <div class="media-item" data-type="video" data-src="assets/14.mp4"></div>
+
+      </div>
     </section>
 
     <div class="split"></div>
 
+    <!-- 3-RASMLAR BO'LIMI -->
     <section class="section">
-      <div class="section-grid" id="videos-2"></div>
-    </section>
+      <div class="photos" id="photos">
 
+        <!-- RASM QO'SHISH: BLOKNI DUPLICATE QIL -->
+        <div class="media-item" data-type="image" data-src="assets/1.jpg"></div>
+
+        <div class="media-item" data-type="image" data-src="assets/2.jpg"></div>
+
+        <div class="media-item" data-type="image" data-src="assets/3.jpg"></div>
+
+        <div class="media-item" data-type="image" data-src="assets/4.jpg"></div>
+      </div>
+    </section>
     <div class="split"></div>
 
     <section class="section">
-      <div class="photos" id="photos"></div>
+      <div class="photos" id="photos">
+
+        <!-- RASM QO'SHISH: BLOKNI DUPLICATE QIL -->
+        <div class="media-item" data-type="image" data-src="assets/ornat1.jpg"></div>
+
+        <div class="media-item" data-type="image" data-src="assets/ornat2.jpg"></div>
+
+        <div class="media-item" data-type="image" data-src="assets/ornat3.jpg"></div>
+
+        <div class="media-item" data-type="image" data-src="assets/ornat4.jpg"></div>
+      </div>
     </section>
+    <div class="split"></div>
   </main>
 
+  <!-- REELS OYNASI -->
+
   <div class="viewer" id="viewer" aria-modal="true" role="dialog">
-    <button class="close" id="closeViewer" aria-label="Yopish">×</button>
-    <button class="viewer-nav prev" id="prevMedia" aria-label="Oldingi">‹</button>
+    <button class="close" id="closeViewer">×</button>
+    <button class="viewer-nav prev" id="prevMedia">‹</button>
     <div class="viewer-content" id="viewerContent"></div>
-    <button class="viewer-nav next" id="nextMedia" aria-label="Keyingi">›</button>
+    <button class="viewer-nav next" id="nextMedia">›</button>
   </div>
 
   <script>
-    const firstVideos = Array.from({ length: 9 }, (_, i) => `${i + 1}.mp4`);
-    const secondVideos = Array.from({ length: 5 }, (_, i) => `${i + 10}.mp4`);
-    const photos = ['1.jpg', '2.jpg', '3.jpg', '4.jpg'];
-    const ASSET_DIR = 'assets/';
-
-    function assetPath(file) {
-      return `${ASSET_DIR}${file}`;
-    }
     let activeGroup = [];
     let activeIndex = 0;
     let touchStartX = 0;
-
-    function addVideos(files, targetId) {
-      const target = document.getElementById(targetId);
-      files.forEach((file, index) => {
-        const card = document.createElement('div');
-        card.className = 'media-card';
-        const video = document.createElement('video');
-        video.src = assetPath(file);
-        video.autoplay = true;
-        video.muted = true;
-        video.loop = true;
-        video.playsInline = true;
-        video.preload = 'metadata';
-        video.controls = false;
-        video.addEventListener('error', () => card.style.display = 'none');
-        card.appendChild(video);
-        card.addEventListener('click', () => openMedia(files, index));
-        target.appendChild(card);
-        video.play().catch(() => { });
-      });
-    }
-
-    function addPhotos() {
-      const target = document.getElementById('photos');
-      photos.forEach((file, index) => {
-        const card = document.createElement('div');
-        card.className = 'media-card photo-card';
-        const img = document.createElement('img');
-        img.src = assetPath(file);
-        img.alt = '';
-        img.loading = 'lazy';
-        img.addEventListener('error', () => card.style.display = 'none');
-        card.appendChild(img);
-        card.addEventListener('click', () => openMedia(photos, index));
-        target.appendChild(card);
-      });
-    }
 
     const viewer = document.getElementById('viewer');
     const viewerContent = document.getElementById('viewerContent');
     const prevButton = document.getElementById('prevMedia');
     const nextButton = document.getElementById('nextMedia');
+
+    /* HTML BLOKLARIDAN MEDIA KARTALARINI YASASH */
+
+    function initializeMedia() {
+      document.querySelectorAll('.media-item').forEach(item => {
+        const type = item.dataset.type;
+        const src = item.dataset.src;
+
+        if (!src || !type) return;
+
+        const card = document.createElement('div');
+        card.className = 'media-card';
+
+        let preview;
+
+        if (type === 'video') {
+          preview = document.createElement('video');
+          preview.src = src;
+          preview.autoplay = true;
+          preview.muted = true;
+          preview.loop = true;
+          preview.playsInline = true;
+          preview.preload = 'metadata';
+          preview.controls = false;
+          preview.play().catch(() => { });
+        } else if (type === 'image') {
+          preview = document.createElement('img');
+          preview.src = src;
+          preview.alt = '';
+          preview.loading = 'lazy';
+        } else {
+          return;
+        }
+
+        preview.addEventListener('error', () => {
+          console.error('Media yuklanmadi:', src);
+          card.style.display = 'none';
+        });
+
+        card.appendChild(preview);
+
+        card.addEventListener('click', () => {
+          const container = item.parentElement;
+          const group = Array.from(container.querySelectorAll('.media-item'))
+            .filter(element => element.dataset.src && element.dataset.type);
+
+          openMedia(group, group.indexOf(item));
+        });
+
+        item.replaceWith(card);
+      });
+    }
+
+    /* MEDIA OCHISH */
 
     function openMedia(group, index) {
       activeGroup = group;
@@ -307,79 +391,115 @@
       viewer.classList.add('open');
     }
 
+    /* MEDIA KO'RSATISH */
+
     function renderMedia() {
       const oldVideo = viewerContent.querySelector('video');
+
       if (oldVideo) {
         oldVideo.pause();
         oldVideo.removeAttribute('src');
         oldVideo.load();
       }
+
       viewerContent.replaceChildren();
-      const file = activeGroup[activeIndex];
-      if (file.toLowerCase().endsWith('.mp4')) {
+
+      const item = activeGroup[activeIndex];
+      if (!item) return;
+
+      const src = item.dataset.src;
+      const type = item.dataset.type;
+
+      if (type === 'video') {
         const video = document.createElement('video');
-        video.src = assetPath(file);
+        video.src = src;
         video.controls = true;
         video.autoplay = true;
         video.playsInline = true;
         video.preload = 'auto';
         video.muted = false;
+
         viewerContent.appendChild(video);
         video.play().catch(() => { });
       } else {
         const img = document.createElement('img');
-        img.src = assetPath(file);
+        img.src = src;
         img.alt = '';
         viewerContent.appendChild(img);
       }
+
       prevButton.disabled = activeIndex === 0;
       nextButton.disabled = activeIndex === activeGroup.length - 1;
     }
 
+    /* OLDINGI / KEYINGI MEDIA */
+
     function moveMedia(direction) {
       const nextIndex = activeIndex + direction;
+
       if (nextIndex < 0 || nextIndex >= activeGroup.length) return;
+
       activeIndex = nextIndex;
       renderMedia();
     }
 
+    /* OYNANI YOPISH */
+
     function closeViewer() {
-      const media = viewerContent.querySelector('video');
-      if (media) {
-        media.pause();
-        media.removeAttribute('src');
-        media.load();
+      const video = viewerContent.querySelector('video');
+
+      if (video) {
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
       }
+
       viewer.classList.remove('open');
       viewerContent.replaceChildren();
       activeGroup = [];
       activeIndex = 0;
     }
 
+    /* TUGMALAR */
+
     document.getElementById('closeViewer').addEventListener('click', closeViewer);
+
     prevButton.addEventListener('click', () => moveMedia(-1));
     nextButton.addEventListener('click', () => moveMedia(1));
+
+    /* TELEFONDA SURISH */
+
     viewer.addEventListener('touchstart', event => {
       touchStartX = event.changedTouches[0].screenX;
     }, { passive: true });
+
     viewer.addEventListener('touchend', event => {
       const deltaX = event.changedTouches[0].screenX - touchStartX;
-      if (Math.abs(deltaX) > 55) moveMedia(deltaX < 0 ? 1 : -1);
+
+      if (Math.abs(deltaX) > 55) {
+        moveMedia(deltaX < 0 ? 1 : -1);
+      }
     }, { passive: true });
+
+    /* KLAVIATURA */
+
     viewer.addEventListener('click', event => {
       if (event.target === viewer) closeViewer();
     });
+
     document.addEventListener('keydown', event => {
       if (!viewer.classList.contains('open')) return;
+
       if (event.key === 'Escape') closeViewer();
       if (event.key === 'ArrowLeft') moveMedia(-1);
       if (event.key === 'ArrowRight') moveMedia(1);
     });
 
-    addVideos(firstVideos, 'videos-1');
-    addVideos(secondVideos, 'videos-2');
-    addPhotos();
+    /* ISHGA TUSHIRISH */
+
+    initializeMedia();
   </script>
+
 </body>
 
 </html>
