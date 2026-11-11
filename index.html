@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101419">
+  <title>Media Gallery</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      color-scheme: dark;
+      --glass: rgba(255, 255, 255, .075);
+      --line: rgba(255, 255, 255, .16);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 28px;
+      color: #fff;
+      background:
+        radial-gradient(ellipse at 15% 0%, rgba(72, 105, 128, .25), transparent 38%),
+        radial-gradient(ellipse at 90% 35%, rgba(75, 82, 120, .19), transparent 40%),
+        linear-gradient(145deg, #0b0f13, #171d23 55%, #0d1116);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .gallery {
+      width: min(1600px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+      gap: 24px;
+    }
+
+    .section {
+      width: min(1600px, 100%);
+      margin: 0 auto 34px;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+      gap: 24px;
+    }
+
+    .media-card {
+      position: relative;
+      overflow: hidden;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .035));
+      box-shadow: 0 16px 45px rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .12);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      cursor: pointer;
+      transition: transform .22s ease, border-color .22s ease, background .22s ease;
+    }
+
+    .media-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, .3);
+      background: linear-gradient(145deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .055));
+    }
+
+    .media-card video,
+    .media-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 17px;
+      background: #080b0e;
+    }
+
+    .media-card img {
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      background: rgba(0, 0, 0, .18);
+    }
+
+    .split {
+      width: min(1600px, 100%);
+      height: 1px;
+      margin: 42px auto;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .25), transparent);
+    }
+
+    .photos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+      gap: 26px;
+    }
+
+    .photo-card {
+      padding: 12px;
+    }
+
+    .photo-card img {
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+    }
+
+    .viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      background: rgba(0, 0, 0, .88);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .viewer.open {
+      display: flex;
+    }
+
+    .viewer-content {
+      position: relative;
+      width: min(1500px, 96vw);
+      max-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .viewer video,
+    .viewer img {
+      display: block;
+      max-width: 100%;
+      max-height: 88vh;
+      width: auto;
+      height: auto;
+      border-radius: 16px;
+      object-fit: contain;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, .55);
+    }
+
+    .viewer-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 58px;
+      border: 1px solid rgba(255, 255, 255, .25);
+      border-radius: 18px;
+      color: white;
+      background: rgba(255, 255, 255, .12);
+      font-size: 30px;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 22;
+    }
+
+    .viewer-nav.prev {
+      left: 22px;
+    }
+
+    .viewer-nav.next {
+      right: 22px;
+    }
+
+    .viewer-nav:disabled {
+      opacity: .25;
+      cursor: default;
+    }
+
+    .close {
+      position: fixed;
+      top: 18px;
+      right: 22px;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(255, 255, 255, .25);
+      border-radius: 50%;
+      color: white;
+      background: rgba(255, 255, 255, .12);
+      font-size: 27px;
+      line-height: 1;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 14px;
+      }
+
+      .section-grid,
+      .photos {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .media-card {
+        border-radius: 20px;
+        padding: 8px;
+      }
+
+      .media-card video,
+      .media-card img {
+        border-radius: 14px;
+      }
+
+      .split {
+        margin: 28px auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <section class="section">
+      <div class="section-grid" id="videos-1"></div>
+    </section>
+
+    <div class="split"></div>
+
+    <section class="section">
+      <div class="section-grid" id="videos-2"></div>
+    </section>
+
+    <div class="split"></div>
+
+    <section class="section">
+      <div class="photos" id="photos"></div>
+    </section>
+  </main>
+
+  <div class="viewer" id="viewer" aria-modal="true" role="dialog">
+    <button class="close" id="closeViewer" aria-label="Yopish">×</button>
+    <button class="viewer-nav prev" id="prevMedia" aria-label="Oldingi">‹</button>
+    <div class="viewer-content" id="viewerContent"></div>
+    <button class="viewer-nav next" id="nextMedia" aria-label="Keyingi">›</button>
+  </div>
+
+  <script>
+    const firstVideos = Array.from({ length: 9 }, (_, i) => `${i + 1}.mp4`);
+    const secondVideos = Array.from({ length: 5 }, (_, i) => `${i + 10}.mp4`);
+    const photos = ['1.jpg', '2.jpg', '3.jpg', '4.jpg'];
+    const ASSET_DIR = 'assets/';
+
+    function assetPath(file) {
+      return `${ASSET_DIR}${file}`;
+    }
+    let activeGroup = [];
+    let activeIndex = 0;
+    let touchStartX = 0;
+
+    function addVideos(files, targetId) {
+      const target = document.getElementById(targetId);
+      files.forEach((file, index) => {
+        const card = document.createElement('div');
+        card.className = 'media-card';
+        const video = document.createElement('video');
+        video.src = assetPath(file);
+        video.autoplay = true;
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.preload = 'metadata';
+        video.controls = false;
+        video.addEventListener('error', () => card.style.display = 'none');
+        card.appendChild(video);
+        card.addEventListener('click', () => openMedia(files, index));
+        target.appendChild(card);
+        video.play().catch(() => { });
+      });
+    }
+
+    function addPhotos() {
+      const target = document.getElementById('photos');
+      photos.forEach((file, index) => {
+        const card = document.createElement('div');
+        card.className = 'media-card photo-card';
+        const img = document.createElement('img');
+        img.src = assetPath(file);
+        img.alt = '';
+        img.loading = 'lazy';
+        img.addEventListener('error', () => card.style.display = 'none');
+        card.appendChild(img);
+        card.addEventListener('click', () => openMedia(photos, index));
+        target.appendChild(card);
+      });
+    }
+
+    const viewer = document.getElementById('viewer');
+    const viewerContent = document.getElementById('viewerContent');
+    const prevButton = document.getElementById('prevMedia');
+    const nextButton = document.getElementById('nextMedia');
+
+    function openMedia(group, index) {
+      activeGroup = group;
+      activeIndex = index;
+      renderMedia();
+      viewer.classList.add('open');
+    }
+
+    function renderMedia() {
+      const oldVideo = viewerContent.querySelector('video');
+      if (oldVideo) {
+        oldVideo.pause();
+        oldVideo.removeAttribute('src');
+        oldVideo.load();
+      }
+      viewerContent.replaceChildren();
+      const file = activeGroup[activeIndex];
+      if (file.toLowerCase().endsWith('.mp4')) {
+        const video = document.createElement('video');
+        video.src = assetPath(file);
+        video.controls = true;
+        video.autoplay = true;
+        video.playsInline = true;
+        video.preload = 'auto';
+        video.muted = false;
+        viewerContent.appendChild(video);
+        video.play().catch(() => { });
+      } else {
+        const img = document.createElement('img');
+        img.src = assetPath(file);
+        img.alt = '';
+        viewerContent.appendChild(img);
+      }
+      prevButton.disabled = activeIndex === 0;
+      nextButton.disabled = activeIndex === activeGroup.length - 1;
+    }
+
+    function moveMedia(direction) {
+      const nextIndex = activeIndex + direction;
+      if (nextIndex < 0 || nextIndex >= activeGroup.length) return;
+      activeIndex = nextIndex;
+      renderMedia();
+    }
+
+    function closeViewer() {
+      const media = viewerContent.querySelector('video');
+      if (media) {
+        media.pause();
+        media.removeAttribute('src');
+        media.load();
+      }
+      viewer.classList.remove('open');
+      viewerContent.replaceChildren();
+      activeGroup = [];
+      activeIndex = 0;
+    }
+
+    document.getElementById('closeViewer').addEventListener('click', closeViewer);
+    prevButton.addEventListener('click', () => moveMedia(-1));
+    nextButton.addEventListener('click', () => moveMedia(1));
+    viewer.addEventListener('touchstart', event => {
+      touchStartX = event.changedTouches[0].screenX;
+    }, { passive: true });
+    viewer.addEventListener('touchend', event => {
+      const deltaX = event.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(deltaX) > 55) moveMedia(deltaX < 0 ? 1 : -1);
+    }, { passive: true });
+    viewer.addEventListener('click', event => {
+      if (event.target === viewer) closeViewer();
+    });
+    document.addEventListener('keydown', event => {
+      if (!viewer.classList.contains('open')) return;
+      if (event.key === 'Escape') closeViewer();
+      if (event.key === 'ArrowLeft') moveMedia(-1);
+      if (event.key === 'ArrowRight') moveMedia(1);
+    });
+
+    addVideos(firstVideos, 'videos-1');
+    addVideos(secondVideos, 'videos-2');
+    addPhotos();
+  </script>
+</body>
+
+</html>
